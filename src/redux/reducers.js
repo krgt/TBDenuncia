@@ -4,27 +4,19 @@ import * as businessLogic from "./businessLogic";
 
 const initialState = {
   crimes: [],
-  stats: {},
+  mapaCriminalCrimes: [],
+  mapaCriminalFilters: {},
+  estatisticasCrimes: [],
+  estatisticasFilters: {},
 };
 
 function rootReducer(state = initialState, action) {
   if (action.type === ADD_CRIME) {
     return state;
-    /*
-    return Object.assign({}, state, {
-      crimes: state.crimes.concat(action.payload)
-    });
-      */
   }
   else if (action.type === FETCH_CRIMES) {
-    const crimes = action.payload;
-
-    console.log(businessLogic.calcStats(crimes));
-
-    return Object.assign({}, state, {
-      crimes: crimes,
-      stats: businessLogic.calcStats(crimes)
-    });
+    const newState = businessLogic.computeNewState(state, action.payload);
+    return Object.assign({}, state, newState);
   }
   return state;
 }

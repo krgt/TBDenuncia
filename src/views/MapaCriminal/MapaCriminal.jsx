@@ -47,7 +47,7 @@ const layerPaint = {
 }
 
 const mapStateToProps = (state) => {
-  return { crimes: state.crimes };
+  return { crimes: state.crimes};
 }
 
 // in render()
