@@ -5,23 +5,67 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
 import ChartistGraph from "react-chartist";
+import Chartist from "chartist";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-import { crimeDisplayConfig } from "config.js";
+import { crimeDisplayConfig, chartMonthLabels } from "config.js";
 
-import {
-  dailySalesChart,
-  emailsSubscriptionChart,
-  completedTasksChart
-} from "variables/charts.jsx";
+var delays = 80,
+  durations = 500;
+
+const chartConfig = {
+  options: {
+    lineSmooth: Chartist.Interpolation.cardinal({
+      tension: 0
+    }),
+    low: 0,
+    high: 10,
+    chartPadding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
+    axisY: {
+      onlyInteger: true
+    }
+  },
+  animation: {
+    draw: function(data) {
+      if (data.type === "line" || data.type === "area") {
+        data.element.animate({
+          d: {
+            begin: 600,
+            dur: 700,
+            from: data.path
+              .clone()
+              .scale(1, 0)
+              .translate(0, data.chartRect.height())
+              .stringify(),
+            to: data.path.clone().stringify(),
+            easing: Chartist.Svg.Easing.easeOutQuint
+          }
+        });
+      } else if (data.type === "point") {
+        data.element.animate({
+          opacity: {
+            begin: (data.index + 1) * delays,
+            dur: durations,
+            from: 0,
+            to: 1,
+            easing: "ease"
+          }
+        });
+      }
+    }
+  }
+};
 
 class CardCrimeStats extends React.Component {
   render() {
-    const { classes, type } = this.props;
+    const { classes, type, data } = this.props;
     const {icon, cardColor, statsTitle} = crimeDisplayConfig[type];
 
     const imgStyle = {
@@ -29,6 +73,11 @@ class CardCrimeStats extends React.Component {
       height: "36px",
       padding: "10px",
       color: "#fff"
+    };
+    
+    const chartData = {
+      labels: chartMonthLabels,
+      series: [data.numCrimesByMonth]
     };
 
     return (
@@ -40,16 +89,16 @@ class CardCrimeStats extends React.Component {
             </CardIcon>
             <h4 className={classes.cardTitle}>{statsTitle}</h4>
             <h3 className={classes.cardTitle}>
-              20
+              {data.numCrimes}  
             </h3>
           </CardHeader>
             <CardHeader style={{marginBottom: "15px"}} color={cardColor}>
               <ChartistGraph
                 className="ct-chart"
-                data={emailsSubscriptionChart.data}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                listener={emailsSubscriptionChart.animation}
+                data={chartData}
+                type="Line"
+                options={chartConfig.options}
+                listener={chartConfig.animation}
               />
             </CardHeader>
         </Card>
