@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
   getRoute() {
-    return window.location.pathname !== "/admin/maps";
+    return window.location.pathname !== "/mapacriminal";
   }
   resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -130,7 +130,10 @@ class Dashboard extends React.Component {
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
-          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+          {/*
+            On the /maps route we want the map to be on full screen
+            this is not possible if the content and conatiner classes
+            are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>

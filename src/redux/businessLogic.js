@@ -1,5 +1,9 @@
 import { crimeTypes } from "config";
 
+/*
+  Input: A list with all crimes in the database.
+  Output: An object with crimes grouped by crimeType.
+*/
 function getCrimesByType(crimes) {
   const crimesByType = {}
 
@@ -14,6 +18,10 @@ function getCrimesByType(crimes) {
   return crimesByType;
 }
 
+/*
+  Input: A list of crimes of a given crimeType.
+  Output: An object with the stats displayed at Estatisticas view for a given crimeType.
+*/
 function computeEstatisticasCrimeType(crimes) {
   const stats = {};
 
@@ -31,12 +39,31 @@ function computeEstatisticasCrimeType(crimes) {
   return stats;
 }
 
+function computeHigh(stats) {
+  let high = 0;
+
+  for (const crimeType of crimeTypes) {
+    high = stats[crimeType].numCrimesByMonth.reduce( (high, value) => {
+      return high > value ? high : value;
+    }, high);
+  }
+
+  return high;
+}
+
+/*
+  Input: An object with lists of crimes grouped by crimeType.
+  Return: An object with the stats displayed at Estatisticas view for all crimeTypes
+*/
 function computeEstatisticasCrimes(crimes, filters) {
   const stats = {};
 
   for (const crimeType of crimeTypes) {
     stats[crimeType] = computeEstatisticasCrimeType(crimes[crimeType]);
   }
+
+  // highest value found (will be used when drawing chart)
+  stats.high = computeHigh(stats);
 
   return stats
 }
@@ -46,7 +73,6 @@ function computeNewState(state, crimes) {
 
     const mapaCriminalCrimes = crimes;
     const estatisticasCrimes = computeEstatisticasCrimes(crimesByType, state.estatisticasFilters);
-    console.log(estatisticasCrimes);
 
     return {
       crimes: crimes,

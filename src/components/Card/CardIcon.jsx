@@ -50,7 +50,9 @@ CardIcon.propTypes = {
     "danger",
     "info",
     "primary",
-    "rose"
+    "rose",
+    "carTheft",
+    "murder",
   ]),
   children: PropTypes.node
 };

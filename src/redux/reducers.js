@@ -6,7 +6,7 @@ const initialState = {
   crimes: [],
   mapaCriminalCrimes: [],
   mapaCriminalFilters: {},
-  estatisticasCrimes: [],
+  estatisticasCrimes: null,
   estatisticasFilters: {},
 };
 

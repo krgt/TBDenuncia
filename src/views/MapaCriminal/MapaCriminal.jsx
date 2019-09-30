@@ -47,7 +47,7 @@ const layerPaint = {
 }
 
 const mapStateToProps = (state) => {
-  return { crimes: state.crimes};
+  return { crimes: state.crimes };
 }
 
 // in render()
@@ -62,7 +62,7 @@ class MapaCriminal extends React.Component {
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={{
           display: "flex",
-          height: "calc(100vh - 130px)",
+          height: "calc(100vh - 60px)",
           width: "100%"
         }}
         center={[-50.632994, -24.326451]}

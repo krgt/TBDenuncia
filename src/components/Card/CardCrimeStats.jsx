@@ -65,7 +65,7 @@ const chartConfig = {
 
 class CardCrimeStats extends React.Component {
   render() {
-    const { classes, type, data } = this.props;
+    const { classes, type, data, high } = this.props;
     const {icon, cardColor, statsTitle} = crimeDisplayConfig[type];
 
     const imgStyle = {
@@ -74,11 +74,13 @@ class CardCrimeStats extends React.Component {
       padding: "10px",
       color: "#fff"
     };
-    
+
     const chartData = {
       labels: chartMonthLabels,
       series: [data.numCrimesByMonth]
     };
+    
+    chartConfig.options.high = high;
 
     return (
       <GridItem xs={12} sm={6} md={4}>
@@ -92,7 +94,7 @@ class CardCrimeStats extends React.Component {
               {data.numCrimes}  
             </h3>
           </CardHeader>
-            <CardHeader style={{marginBottom: "15px"}} color={cardColor}>
+            <CardHeader style={{marginBottom: "15px", padding: "25px 0px 0px 0px"}} color={cardColor}>
               <ChartistGraph
                 className="ct-chart"
                 data={chartData}

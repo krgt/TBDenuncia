@@ -17,7 +17,7 @@ const crimeDisplayConfig = {
     bgColorClass: 'roseCardHeader',
     displayName: "Estupro",
     cardColor: 'rose',
-    statsTitle: "Esturpos"
+    statsTitle: "Estupros"
   },
   "furto": {
     icon: burglarIcon,
@@ -44,7 +44,23 @@ const crimeDisplayConfig = {
 
 const crimeTypes = Object.keys(crimeDisplayConfig);
 
+const chartMonthLabels = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "Mai",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+
 export {
   crimeDisplayConfig,
-  crimeTypes
+  crimeTypes,
+  chartMonthLabels
 };
