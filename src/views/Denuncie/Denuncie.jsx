@@ -22,6 +22,8 @@ import { addCrime } from 'redux/actions';
 
 import { getCurrentDate, getCurrentTime } from './dateFunctions';
 
+import { mapBoxAccessToken } from 'config';
+
 const crimeNames = ["assalto", "estupro", "furto", "homicidio", "rouboVeiculo"];
 
 const expansionPanelDetailsStyle = {
@@ -115,7 +117,7 @@ class Denuncie extends React.Component {
               container='map'
               style='mapbox://styles/mapbox/streets-v11'
               zoom={13}
-              accessToken="pk.eyJ1Ijoia3JndDEwIiwiYSI6ImNqdmJueGVjdDB4YnU0ZXRkY203bnAzbXkifQ.uP4VDpQ1ycQKV2KaapeISg"
+              accessToken={mapBoxAccessToken}
               onChange={this.handleChange('lngLat')}
             />
           </ExpansionPanelDetails>

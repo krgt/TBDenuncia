@@ -1,5 +1,32 @@
 import { crimeTypes } from "config";
 
+function removeAccents(str) {
+  let strAccents = str.split('');
+  let strAccentsOut = new Array();
+  let strAccentsLen = strAccents.length;
+  let accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+  let accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+
+  for (let y = 0; y < strAccentsLen; y++) {
+    if (accents.indexOf(strAccents[y]) != -1) {
+      strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+    } else
+      strAccentsOut[y] = strAccents[y];
+  }
+
+  strAccentsOut = strAccentsOut.join('');
+
+  return strAccentsOut;
+}
+
+function findAddress(addressList, address) {
+  console.log(addressList);
+  console.log(address);
+  return addressList.find( e => {
+    return removeAccents(e.logradouro) == removeAccents(address)
+  });
+}
+
 /*
   Input: A list with all crimes in the database.
   Output: An object with crimes grouped by crimeType.
@@ -83,5 +110,6 @@ function computeNewState(state, crimes) {
 }
 
 export {
+  findAddress,
   computeNewState
 }

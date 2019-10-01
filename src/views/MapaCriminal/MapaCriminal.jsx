@@ -5,8 +5,10 @@ import { connect } from "react-redux";
 
 //const data = require('variables/geojson.json');
 
+import { mapBoxAccessToken } from 'config';
+
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1Ijoia3JndDEwIiwiYSI6ImNqdmJueGVjdDB4YnU0ZXRkY203bnAzbXkifQ.uP4VDpQ1ycQKV2KaapeISg"
+  accessToken: mapBoxAccessToken
 });
 
 const layerPaint = {
