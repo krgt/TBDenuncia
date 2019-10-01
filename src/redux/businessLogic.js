@@ -20,10 +20,8 @@ function removeAccents(str) {
 }
 
 function findAddress(addressList, address) {
-  console.log(addressList);
-  console.log(address);
   return addressList.find( e => {
-    return removeAccents(e.logradouro) == removeAccents(address)
+    return removeAccents(e.logradouro).toLowerCase() == removeAccents(address).toLowerCase();
   });
 }
 
