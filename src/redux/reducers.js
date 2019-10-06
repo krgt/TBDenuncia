@@ -8,13 +8,12 @@ const initialState = {
   mapaCriminalFilters: {},
   estatisticasCrimes: null,
   estatisticasFilters: {},
+  timelineCrimes: [],
+  timelineFilters: {}
 };
 
 function rootReducer(state = initialState, action) {
-  if (action.type === ADD_CRIME) {
-    return state;
-  }
-  else if (action.type === FETCH_CRIMES) {
+  if (action.type === FETCH_CRIMES) {
     const newState = businessLogic.computeNewState(state, action.payload);
     return Object.assign({}, state, newState);
   }

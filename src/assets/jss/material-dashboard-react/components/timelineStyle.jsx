@@ -1,19 +1,14 @@
 import {
-  blackColor,
   whiteColor,
-  hexToRgb,
   warningCardHeader,
   successCardHeader,
   dangerCardHeader,
-  infoCardHeader,
-  primaryCardHeader,
   roseCardHeader,
-  grayColor,
   murderCardHeader,
   carTheftCardHeader
 } from "assets/jss/material-dashboard-react.jsx";
 
-const timelineDayStyle = {
+const timelineContainerStyle = {
   timelineContainer: {
     position: "relative",
     width: "100%",
@@ -30,8 +25,10 @@ const timelineDayStyle = {
         left: "50%",
       }
     },
-  },
+  }
+}
 
+const timelineDayStyle = {
   dayContainer: {
     marginBottom: "40px",
     display: "flex",
@@ -46,7 +43,10 @@ const timelineDayStyle = {
     borderRadius: "6px",
     fontSize: ".875rem",
   },
+  successCardHeader,
+}
 
+const timelineEventStyle = {
   iconContainer: {
     borderRadius: "50%",
     "@media (min-width: 960px)": {
@@ -64,7 +64,6 @@ const timelineDayStyle = {
       order: "1",
     },
   },
-
   eventContainer: {
     marginTop: "40px",
     display: "flex",
@@ -72,10 +71,10 @@ const timelineDayStyle = {
     fontSize: ".875rem",
     textAlign: "justify",
     "@media (min-width: 960px)": {
-      "&:nth-child(odd)": {
+      "&:nth-of-type(odd)": {
         flexDirection: "row-reverse",
       },
-      "&:nth-child(even)": {
+      "&:nth-of-type(even)": {
         "& div:nth-child(2)": {
           "&:before": {
             right: "auto",
@@ -144,7 +143,6 @@ const timelineDayStyle = {
   eventDesc: {
     marginTop: "10px",
   },
-
   eventHeader: {
     color: whiteColor,
     padding: "15px",
@@ -157,13 +155,14 @@ const timelineDayStyle = {
   },
 
   warningCardHeader,
-  successCardHeader,
   dangerCardHeader,
-  infoCardHeader,
-  primaryCardHeader,
   roseCardHeader,
-  grayColor,
   murderCardHeader,
+  carTheftCardHeader
 };
 
-export default timelineDayStyle;
+export {
+  timelineContainerStyle,
+  timelineDayStyle,
+  timelineEventStyle
+}

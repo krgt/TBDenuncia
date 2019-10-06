@@ -5,6 +5,7 @@ import carTheftIcon from "assets/img/cartheft.png";
 import womanStopIcon from "assets/img/womanstop.png";
 
 const mapBoxAccessToken = "pk.eyJ1Ijoia3JndDEwIiwiYSI6ImNqdmJueGVjdDB4YnU0ZXRkY203bnAzbXkifQ.uP4VDpQ1ycQKV2KaapeISg"
+
 const getMapBoxReverseGeocodingUrl = lngLat => {
   return `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat[0]},${lngLat[1]}.json?access_token=${mapBoxAccessToken}&types=address`;
 }

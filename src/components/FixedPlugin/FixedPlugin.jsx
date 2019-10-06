@@ -54,7 +54,8 @@ class FixedPlugin extends Component {
             <i className="fa fa-cog fa-2x" />
           </div>
           <ul className="dropdown-menu">
-            <li className="header-title">SIDEBAR FILTERS</li>
+            <li className="header-title">Configurações de Exibição</li>
+            {/*
             <li className="adjustments-line">
               <a className="switch-trigger">
                 <div>
@@ -196,6 +197,7 @@ class FixedPlugin extends Component {
                 Documentation
               </Button>
             </li>
+              */}
             <li className="adjustments-line" />
           </ul>
         </div>

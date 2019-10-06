@@ -25,6 +25,19 @@ function findAddress(addressList, address) {
   });
 }
 
+function swapRuaTravessa(address) {
+  const words = address.split(' ');
+
+  if (words[0].toLowerCase() === 'rua') {
+    words[0] = 'Travessa';
+  }
+  else if (words[0].toLowerCase() === 'travessa') {
+    words[0] = 'Rua';
+  }
+
+  return words.join(' ');
+}
+
 /*
   Input: A list with all crimes in the database.
   Output: An object with crimes grouped by crimeType.
@@ -93,21 +106,39 @@ function computeEstatisticasCrimes(crimes, filters) {
   return stats
 }
 
+function computeTimelineCrimes(crimes, filters) {
+  let dateA, dateB;
+
+  return crimes.all.sort( (a, b) => {
+    dateA = new Date(a.date + ' ' + a.time);
+    dateB = new Date(b.date + ' ' + b.time);
+    if (dateA < dateB)
+      return 1;
+    else if (dateA > dateB)
+      return -1;
+    return 0;
+  })
+}
+
+
 function computeNewState(state, crimes) {
     const crimesByType = getCrimesByType(crimes);
 
     const mapaCriminalCrimes = crimes;
     const estatisticasCrimes = computeEstatisticasCrimes(crimesByType, state.estatisticasFilters);
+    const timelineCrimes = computeTimelineCrimes(crimesByType, state.timelineFilters);
 
     return {
       crimes: crimes,
       crimesByType: crimesByType,
       mapaCriminalCrimes: mapaCriminalCrimes,
-      estatisticasCrimes: estatisticasCrimes
+      estatisticasCrimes: estatisticasCrimes,
+      timelineCrimes: timelineCrimes
     }
 }
 
 export {
   findAddress,
+  swapRuaTravessa,
   computeNewState
 }
