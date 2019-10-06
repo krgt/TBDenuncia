@@ -14,17 +14,19 @@ import { crimeDisplayConfig } from "config.js";
 
 // in render()
 function TimelineEvent({ ...props }) {
-  const { classes, data } = props;
+  const { classes, data, orientation } = props;
 
   const {icon, bgColorClass, displayName} = crimeDisplayConfig[data.crimeType];
 
   let street = data.address.street ? data.address.street : data.lngLat;
   let cityDivision = data.address.cityDivision ? data.address.cityDivision : '';
 
-  console.log(data);
+  const orientationClass = orientation === 'left'
+    ? classes.eventContainerLeft
+    : classes.eventContainerRight;
 
   return (
-    <div className={classes.eventContainer}>
+    <div className={classNames(classes.eventContainer, orientationClass)}>
       <div className={classNames(classes.iconContainer, classes[bgColorClass])}>
         <img className={classes.icon} src={icon} />
       </div>

@@ -11,6 +11,18 @@ const mapStateToProps = (state) => {
   return { crimes: state.timelineCrimes };
 }
 
+function formatDate(date) {
+  const monthNames = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril',
+    'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro',
+    'Outubro', 'Novembro', 'Dezembro'
+  ];
+
+  date = new Date(date);
+
+  return `${date.getDay()} de ${monthNames[date.getMonth()]}`;
+}
+
 // in render()
 function Timeline({ ...props }) {
   const {
@@ -18,14 +30,31 @@ function Timeline({ ...props }) {
     crimes
   } = props;
 
+  let previousDate = '';
+
   if (crimes == null) return null;
 
   return (
     <div className={classes.timelineContainer}>
-      {crimes.map( (crime, index) => (
-        <TimelineEvent key={index} data={crime}/>
-      ))}
-      <TimelineDay/>
+      {crimes.map( (crime, index) => {
+        let dayComponent = '';
+
+        if (previousDate !== crime.date) {
+          previousDate = crime.date;
+          console.log(formatDate(crime.date));
+          dayComponent = <TimelineDay date={formatDate(crime.date)}/>;
+        }
+
+        return (
+          <div key={index}>
+            {dayComponent}
+            <TimelineEvent
+              data={crime}
+              orientation={index % 2 ? 'right': 'left'}
+              />
+          </div>
+        )
+      })}
     </div>
   );
 }

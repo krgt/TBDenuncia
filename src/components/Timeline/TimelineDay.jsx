@@ -14,7 +14,7 @@ function TimelineDay({ ...props }) {
   return (
     <div className={classes.dayContainer}>
       <div className={classNames(classes.day, classes.successCardHeader)}>
-        25 de Abril de 2019
+        {date}
       </div>
     </div>
   );

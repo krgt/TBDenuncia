@@ -30,6 +30,7 @@ const timelineContainerStyle = {
 
 const timelineDayStyle = {
   dayContainer: {
+    marginTop: "20px",
     marginBottom: "40px",
     display: "flex",
     "@media (min-width: 960px)": {
@@ -70,26 +71,28 @@ const timelineEventStyle = {
     alignItems: "flex-start",
     fontSize: ".875rem",
     textAlign: "justify",
+  },
+  eventContainerLeft: {
     "@media (min-width: 960px)": {
-      "&:nth-of-type(odd)": {
-        flexDirection: "row-reverse",
-      },
-      "&:nth-of-type(even)": {
-        "& div:nth-child(2)": {
-          "&:before": {
-            right: "auto",
-            left: "100%",
-            border: "15px solid transparent",
-            borderLeftColor: "#e4e4e4",
-          },
-          "&:after": {
-            left: "100%",
-            border: "15px solid transparent",
-            borderLeftColor: whiteColor,
-          },
+      "& div:nth-child(2)": {
+        "&:before": {
+          right: "auto",
+          left: "100%",
+          border: "15px solid transparent",
+          borderLeftColor: "#e4e4e4",
+        },
+        "&:after": {
+          left: "100%",
+          border: "15px solid transparent",
+          borderLeftColor: whiteColor,
         },
       },
     },
+  },
+  eventContainerRight: {
+    "@media (min-width: 960px)": {
+        flexDirection: "row-reverse",
+    }
   },
   eventCard: {
     boxSizing: "border-box",
