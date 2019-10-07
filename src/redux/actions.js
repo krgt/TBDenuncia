@@ -52,7 +52,8 @@ export function addCrime(payload) {
   axios.get(getMapBoxReverseGeocodingUrl(payload.lngLat))
   .then( response => {
     address.street = response.data.features[0].text;
-    address.number = response.data.features[0].address;
+    if (response.data.features[0].hasOwnProperty('address'))
+      address.number = response.data.features[0].address;
     // get rest of address from Correios API
     axios.get(getCorreiosCepUrl(address.street))
     .then( response => {
