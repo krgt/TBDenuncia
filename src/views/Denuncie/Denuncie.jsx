@@ -4,25 +4,18 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import CrimeTypeSelectItem from 'components/Crime/CrimeTypeSelectItem.jsx';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from "@material-ui/core/Box";
 
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
-//import denuncieStyle from "assets/jss/material-dashboard-react/views/denuncieStyle.jsx";
 import CoordinatesSelector from 'components/Denuncie/CoordinatesSelector.jsx';
 import CpfInput from 'components/Denuncie/CpfInput.jsx';
 
@@ -35,11 +28,6 @@ import { getCurrentDate, getCurrentTime } from './dateFunctions';
 import { mapBoxAccessToken } from 'config';
 
 const crimeNames = ["assalto", "estupro", "furto", "homicidio", "rouboVeiculo"];
-
-const expansionPanelDetailsStyle = {
-  paddingTop: "5px",
-  paddingBottom: "5px"
-}
 
 const styles = {
   cardCategoryWhite: {
