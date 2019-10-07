@@ -18,9 +18,11 @@ function formatDate(date) {
     'Outubro', 'Novembro', 'Dezembro'
   ];
 
-  date = new Date(date);
+  const dateSplit = date.split('-');
+  const month = monthNames[dateSplit[1]-1];
+  const day = dateSplit[2];
 
-  return `${date.getDay()} de ${monthNames[date.getMonth()]}`;
+  return `${day} de ${month}`;
 }
 
 // in render()
@@ -41,7 +43,6 @@ function Timeline({ ...props }) {
 
         if (previousDate !== crime.date) {
           previousDate = crime.date;
-          console.log(formatDate(crime.date));
           dayComponent = <TimelineDay date={formatDate(crime.date)}/>;
         }
 
