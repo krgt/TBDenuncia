@@ -52,7 +52,7 @@ const Sidebar = ({ ...props }) => {
           });
         } else if (prop.path === "/denuncie") {
           listItemClasses = classNames({
-            [" " + classes["red"]]: true
+            [" " + classes["purple"]]: true
           });
         } else {
           listItemClasses = classNames({

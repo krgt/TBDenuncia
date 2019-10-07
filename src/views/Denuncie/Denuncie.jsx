@@ -10,11 +10,21 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Box from "@material-ui/core/Box";
+
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+import Card from "components/Card/Card.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import CardAvatar from "components/Card/CardAvatar.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
 
 //import denuncieStyle from "assets/jss/material-dashboard-react/views/denuncieStyle.jsx";
 import CoordinatesSelector from 'components/Denuncie/CoordinatesSelector.jsx';
 import CpfInput from 'components/Denuncie/CpfInput.jsx';
-import Button from "components/CustomButtons/Button.jsx";
 
 import { connect } from "react-redux";
 import compose from 'recompose/compose';
@@ -30,6 +40,25 @@ const expansionPanelDetailsStyle = {
   paddingTop: "5px",
   paddingBottom: "5px"
 }
+
+const styles = {
+  cardCategoryWhite: {
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none"
+  }
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -69,132 +98,132 @@ class Denuncie extends React.Component {
 
   handleChange(name) { return (event) => {
     this.setState({ [name]: event.target.value });
+    console.log(this.state);
   }};
 
   handleSubmit(event) {
     this.props.addCrimeProp(this.state);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.state);
+  }
+
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
-        <ExpansionPanel defaultExpanded={true}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            Dados Obrigatórios
-          </ExpansionPanelSummary>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Faça sua Denúncia</h4>
+                <p className={classes.cardCategoryWhite}>Verifique antes em nossa timeline se o crime já não foi denunciado.</p>
+              </CardHeader>
 
-          {/*Crime type selector*/}
-          <ExpansionPanelDetails style={expansionPanelDetailsStyle}>
-            <TextField
-              id="outlined-select-crimeType"
-              select
-              label="Tipo do Crime"
-              value={this.state.crimeType}
-              onChange={this.handleChange('crimeType')}
-              variant="outlined"
-              SelectProps={{
-                MenuProps: {
-                  className: '' //classes.menu,
-                },
-              }}
-              margin="normal"
-            >
-              {crimeNames.map(crimeName => (
-                <MenuItem key={crimeName} value={crimeName}>
-                  <CrimeTypeSelectItem type={crimeName}/>
-                </MenuItem>
-              ))}
-            </TextField>
-          </ExpansionPanelDetails>
+              <CardBody>
+                <Box>
+                  <TextField
+                    id="outlined-select-crimeType"
+                    select
+                    label="Tipo do Crime"
+                    value={this.state.crimeType}
+                    onChange={this.handleChange('crimeType')}
+                    variant="outlined"
+                    SelectProps={{
+                      MenuProps: {
+                        className: '' //classes.menu,
+                      },
+                    }}
+                    margin="normal"
+                  >
+                    {crimeNames.map(crimeName => (
+                      <MenuItem key={crimeName} value={crimeName}>
+                        <CrimeTypeSelectItem type={crimeName}/>
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
 
-          {/* Coordinates selector */}
-          <ExpansionPanelDetails style={expansionPanelDetailsStyle}>
-            <CoordinatesSelector
-              container='map'
-              style='mapbox://styles/mapbox/streets-v11'
-              zoom={13}
-              accessToken={mapBoxAccessToken}
-              onChange={this.handleChange('lngLat')}
-            />
-          </ExpansionPanelDetails>
+                  <Box>
+                    <CoordinatesSelector
+                      container='map'
+                      style='mapbox://styles/mapbox/streets-v11'
+                      zoom={13}
+                      accessToken={mapBoxAccessToken}
+                      onChange={this.handleChange('lngLat')}
+                    />
+                  </Box>
 
-          {/* Date time selector */}
-          <ExpansionPanelDetails style={expansionPanelDetailsStyle}>
-            <TextField
-              id="date"
-              label="Data"
-              type="date"
-              value={this.state.date}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin="normal"
-              variant="outlined"
-              style={{paddingRight: "10px"}}
-              onChange={this.handleChange('date')}
-            />
+                  <Box>
+                    <TextField
+                      id="date"
+                      label="Data"
+                      type="date"
+                      value={this.state.date}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      margin="normal"
+                      variant="outlined"
+                      style={{paddingRight: "10px"}}
+                      onChange={this.handleChange('date')}
+                    />
+                  </Box>
 
-            <TextField
-              id="time"
-              label="Hora"
-              type="time"
-              margin="normal"
-              value={this.state.time}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300, // 5 min
-              }}
-              variant="outlined"
-              onChange={this.handleChange('time')}
-            />
-          </ExpansionPanelDetails>
+                  <Box>
+                    <TextField
+                      id="time"
+                      label="Hora"
+                      type="time"
+                      margin="normal"
+                      value={this.state.time}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      inputProps={{
+                        step: 300, // 5 min
+                      }}
+                      variant="outlined"
+                      onChange={this.handleChange('time')}
+                    />
+                  </Box>
 
-          <ExpansionPanelDetails style={expansionPanelDetailsStyle}>
-            <CpfInput cpf={this.state.cpf} onChange={this.handleChange('cpf')}/>
-          </ExpansionPanelDetails>
+                  <Box display="block">
+                    <CpfInput cpf={this.state.cpf} onChange={this.handleChange('cpf')}/>
+                  </Box>
 
-          <ExpansionPanelDetails style={expansionPanelDetailsStyle}>
-            <TextField
-              fullWidth
-              id="descricaoCrime"
-              label="Descreva o crime"
-              value={this.state.crimeDescription}
-              placeholder="Conte-nos o que aconteceu."
-              margin="dense"
-              variant="outlined"
-              multiline
-              rows="4"
-              onChange={this.handleChange('crimeDescription')}
-            />
-          </ExpansionPanelDetails>
+                  <Box>
+                    <TextField
+                      fullWidth
+                      id="descricaoCrime"
+                      label="Descreva o crime"
+                      value={this.state.crimeDescription}
+                      placeholder="Conte-nos o que aconteceu."
+                      margin="dense"
+                      variant="outlined"
+                      multiline
+                      rows="4"
+                      onChange={this.handleChange('crimeDescription')}
+                    />
+                  </Box>
+              </CardBody>
 
-        </ExpansionPanel>
-
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            Dados Opcionais
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
-        <Button
-          color="info"
-          target="_blank"
-          onClick={this.handleSubmit}
-        >
-          Enviar
-        </Button>
+              <CardFooter>
+                <Box>
+                  <Button
+                    color="primary"
+                    target="_blank"
+                    onClick={this.handleSubmit}
+                  >
+                    Enviar
+                  </Button>
+                </Box>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
     )
   }
@@ -204,11 +233,7 @@ Denuncie.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(Denuncie);
-
-/*
 export default compose(
-  withStyles(denuncieStyle),
+  withStyles(styles),
   connect(null, mapDispatchToProps),
 )(Denuncie);
-*/
