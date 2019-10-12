@@ -143,6 +143,7 @@ class Dashboard extends React.Component {
           )}
           {/*this.getRoute() ? <Footer /> : null*/}
           <FixedPlugin
+            path={this.props.location.pathname}
             handleImageClick={this.handleImageClick}
             handleColorClick={this.handleColorClick}
             bgColor={this.state["color"]}

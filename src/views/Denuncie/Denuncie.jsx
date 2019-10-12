@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import withStyles from "@material-ui/core/styles/withStyles";
 import CrimeTypeSelectItem from 'components/Crime/CrimeTypeSelectItem.jsx';
-
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from "@material-ui/core/Box";
-
+import AddAlert from "@material-ui/icons/AddAlert";
+import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
+import ConfirmSnackbar from "./components/ConfirmSnackbar.jsx";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -15,10 +16,9 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-
 import CoordinatesSelector from 'components/Denuncie/CoordinatesSelector.jsx';
 import CpfInput from 'components/Denuncie/CpfInput.jsx';
-
+import ConfirmDialog from './components/ConfirmDialog.jsx';
 import { connect } from "react-redux";
 import compose from 'recompose/compose';
 import { addCrime } from 'redux/actions';
@@ -69,13 +69,16 @@ class Denuncie extends React.Component {
         error: false,
         label: "CPF",
         validInput: false
-      }
+      },
+      confirmDialogOpen: false,
+      confirmationSnackbar: false
     };
 
     this.onChangeLngLat = props.onChange;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCloseConfirmDialog = this.handleCloseConfirmDialog.bind(this);
   }
 
   /*
@@ -86,16 +89,25 @@ class Denuncie extends React.Component {
 
   handleChange(name) { return (event) => {
     this.setState({ [name]: event.target.value });
-    console.log(this.state);
   }};
 
   handleSubmit(event) {
-    this.props.addCrimeProp(this.state);
-  }
+    this.setState({ confirmDialogOpen: true });
+  };
 
+  handleCloseConfirmDialog(confirmation) { return (event) => {
+    if (confirmation) {
+      this.props.addCrimeProp(this.state);
+      this.setState({ confirmationSnackbar: true });
+    }
+    this.setState({ confirmDialogOpen: false });
+  }};
+
+  /*
   componentDidUpdate(prevProps, prevState) {
     console.log(this.state);
   }
+  */
 
   render() {
     const { classes } = this.props;
@@ -212,6 +224,20 @@ class Denuncie extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+
+        <ConfirmDialog
+          open={this.state.confirmDialogOpen}
+          handleClose={this.handleCloseConfirmDialog}
+        />
+
+        <ConfirmSnackbar
+          open={this.state.confirmationSnackbar}
+          onClose={(event, reason) => {
+            if (reason == "clickaway") return;
+            this.setState({ confirmationSnackbar: false });
+          }}
+          message="Sua denúncia foi enviada."
+        />
       </div>
     )
   }
