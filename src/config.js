@@ -56,17 +56,17 @@ const crimeTypes = Object.keys(crimeDisplayConfig);
 
 const chartMonthLabels = [
   "Jan",
-  "Feb",
+  "Fev",
   "Mar",
-  "Apr",
+  "Abr",
   "Mai",
   "Jun",
   "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
+  "Ago",
+  "Set",
+  "Oout",
   "Nov",
-  "Dec"
+  "Dez"
 ];
 
 export {
