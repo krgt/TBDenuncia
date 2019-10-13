@@ -64,7 +64,7 @@ const chartMonthLabels = [
   "Jul",
   "Ago",
   "Set",
-  "Oout",
+  "Out",
   "Nov",
   "Dez"
 ];
