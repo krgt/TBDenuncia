@@ -26,12 +26,28 @@ import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 // @material-ui/icons
 import Menu from "@material-ui/icons/Menu";
+import SettingsIcon from '@material-ui/icons/Settings';
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.jsx";
 import RTLNavbarLinks from "./RTLNavbarLinks.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
+import { Windows } from "mdi-material-ui";
+
+function settingsButton(onClick) {
+  if (window.location.pathname === '/denuncie')
+    return;
+    return (
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        onClick={onClick}
+      >
+        <SettingsIcon/>
+      </IconButton>
+    );
+}
 
 function Header({ ...props }) {
   function makeBrand() {
@@ -58,6 +74,7 @@ function Header({ ...props }) {
           </Button>
         </div>
 
+        {settingsButton(props.handleSettingsToggle)}
 
         <Hidden mdUp implementation="css">
           <IconButton

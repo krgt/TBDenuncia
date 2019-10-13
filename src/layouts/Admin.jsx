@@ -28,6 +28,7 @@ import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+import Controls from "components/Controls/Controls.jsx";
 
 import routes from "routes.js";
 
@@ -63,7 +64,8 @@ class Dashboard extends React.Component {
     color: "blue",
     hasImage: true,
     fixedClasses: "dropdown",
-    mobileOpen: false
+    mobileOpen: false,
+    settingsOpen: false
   };
   mainPanel = React.createRef();
   handleImageClick = image => {
@@ -81,6 +83,9 @@ class Dashboard extends React.Component {
   };
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+  handleSettingsToggle = () => {
+    this.setState({ settingsOpen: !this.state.settingsOpen });
   };
   getRoute() {
     return window.location.pathname !== "/mapacriminal";
@@ -128,6 +133,7 @@ class Dashboard extends React.Component {
           <Navbar
             routes={routes}
             handleDrawerToggle={this.handleDrawerToggle}
+            handleSettingsToggle={this.handleSettingsToggle}
             {...rest}
           />
           {/*
@@ -142,6 +148,8 @@ class Dashboard extends React.Component {
             <div className={classes.map}>{switchRoutes}</div>
           )}
           {/*this.getRoute() ? <Footer /> : null*/}
+
+          {/*
           <FixedPlugin
             path={this.props.location.pathname}
             handleImageClick={this.handleImageClick}
@@ -151,6 +159,13 @@ class Dashboard extends React.Component {
             handleFixedClick={this.handleFixedClick}
             fixedClasses={this.state.fixedClasses}
           />
+          */}
+
+          <Controls
+            open={this.state.settingsOpen}
+            handleSettingsToggle={this.handleSettingsToggle}
+          />
+
         </div>
       </div>
     );

@@ -64,7 +64,7 @@ class MapaCriminal extends React.Component {
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={{
           display: "flex",
-          height: "calc(100vh - 60px)",
+          height: "calc(100vh - 70px)",
           width: "100%"
         }}
         center={[-50.632994, -24.326451]}
