@@ -89,6 +89,16 @@ function computeHigh(stats) {
   return high;
 }
 
+function filterByType(crimes, crimeType) { return crimes[crimeType]; }
+
+function computeMapaCriminalCrimes(crimes, filters) {
+  let result;
+
+  result = filterByType(crimes, filters.crimeType);
+
+  return result;
+}
+
 /*
   Input: An object with lists of crimes grouped by crimeType.
   Return: An object with the stats displayed at Estatisticas view for all crimeTypes
@@ -124,7 +134,7 @@ function computeTimelineCrimes(crimes, filters) {
 function computeNewState(state, crimes) {
     const crimesByType = getCrimesByType(crimes);
 
-    const mapaCriminalCrimes = crimes;
+    const mapaCriminalCrimes = computeMapaCriminalCrimes(crimesByType, state.mapaCriminalFilters);
     const estatisticasCrimes = computeEstatisticasCrimes(crimesByType, state.estatisticasFilters);
     const timelineCrimes = computeTimelineCrimes(crimesByType, state.timelineFilters);
 
@@ -140,5 +150,6 @@ function computeNewState(state, crimes) {
 export {
   findAddress,
   swapRuaTravessa,
-  computeNewState
+  computeNewState,
+  computeMapaCriminalCrimes
 }

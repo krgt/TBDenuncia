@@ -5,6 +5,8 @@ import CrimeTypeSelectItem from 'components/Crime/CrimeTypeSelectItem.jsx';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import { crimeTypes } from "config";
+import { connect } from "react-redux";
+import { setMapaCriminalFilters } from "redux/actions";
 
 const marksHour = [
   {
@@ -71,24 +73,33 @@ class ControlsMapaCriminal extends React.Component {
     super(props);
 
     this.state = {
-      crimeType: "assalto",
-      hourInterval: [0, 24],
+      crimeType: "all",
+      hourInterval: [0, 23],
       dayMonthInterval: [1, 31],
       dayWeekInterval: [0, 6],
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSliderChange = this.handleSliderChange.bind(this);
+    this.handleSliderChangeCommitted = this.handleSliderChangeCommitted.bind(this);
   }
 
   handleChange(name) { return (event) => {
     this.setState({ [name]: event.target.value });
+ //   this.props.setMapaCriminalFilters(this.state);
   }};
 
   handleSliderChange(name) { return (event, newValue) => {
-    console.log(newValue);
     this.setState({ [name]: newValue });
   }};
+
+  handleSliderChangeCommitted() {
+//    this.props.setMapaCriminalFilters(this.state);
+  };
+
+  componentDidUpdate() {
+    this.props.setMapaCriminalFilters(this.state);
+  }
 
   valueText(value) {
     return value;
@@ -100,7 +111,7 @@ class ControlsMapaCriminal extends React.Component {
         <TextField
           id="outlined-select-crimeType"
           select
-          label="Tipo do Crime"
+          label="Filtro por Tipo de Crime"
           value={this.state.crimeType}
           onChange={this.handleChange('crimeType')}
           variant="outlined"
@@ -111,6 +122,9 @@ class ControlsMapaCriminal extends React.Component {
           }}
           margin="normal"
         >
+          <MenuItem key="all" value="all">
+            <CrimeTypeSelectItem type="all"/>
+          </MenuItem>
           {crimeTypes.map(crimeType => (
             <MenuItem key={crimeType} value={crimeType}>
               <CrimeTypeSelectItem type={crimeType}/>
@@ -125,6 +139,7 @@ class ControlsMapaCriminal extends React.Component {
           marks={marksHour}
           value={this.state.hourInterval}
           onChange={this.handleSliderChange('hourInterval')}
+          onChangeCommitted={this.handleSliderChangeCommitted}
           valueLabelDisplay="auto"
           aria-labelledby="hour-slider"
           getAriaValueText={this.valuetext}
@@ -139,6 +154,7 @@ class ControlsMapaCriminal extends React.Component {
           marks={marksDayMonth}
           value={this.state.dayMonthInterval}
           onChange={this.handleSliderChange('dayMonthInterval')}
+          onChangeCommitted={this.handleSliderChangeCommitted}
           valueLabelDisplay="auto"
           aria-labelledby="dayMonth-slider"
           getAriaValueText={this.valuetext}
@@ -153,6 +169,7 @@ class ControlsMapaCriminal extends React.Component {
           marks={marksDayWeek}
           value={this.state.dayWeekInterval}
           onChange={this.handleSliderChange('dayWeekInterval')}
+          onChangeCommitted={this.handleSliderChangeCommitted}
           valueLabelDisplay="auto"
           valueLabelFormat={(v, i) => {return dayName[v]}}
           aria-labelledby="dayWeek-slider"
@@ -165,4 +182,4 @@ class ControlsMapaCriminal extends React.Component {
   }
 }
 
-export default ControlsMapaCriminal;
+export default connect(null, { setMapaCriminalFilters })(ControlsMapaCriminal);

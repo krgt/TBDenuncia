@@ -15,6 +15,7 @@ import axios from 'axios';
 export const ADD_CRIME = 'ADD_CRIME';
 export const FETCH_CRIMES = 'FETCH_CRIMES';
 export const NO_ACTION = 'NO_ACTION';
+export const SET_MAPACRIMINAL_FILTERS = 'SET_MAPACRIMINAL_FILTERS';
 
 
 // This functions receives the data from the Denuncie form and
@@ -82,7 +83,7 @@ export function addCrime(payload) {
 
   // Once we push the new crime, our firebase listener will be notified of the new data.
   // Thus we do not update the state manually, hence return NO_ACTION to reducer.
-  return { type: NO_ACTION, payload }
+  return { type: NO_ACTION, payload };
 };
 
 export const fetchCrimes = () => async dispatch => {
@@ -93,3 +94,7 @@ export const fetchCrimes = () => async dispatch => {
     });
   });
 };
+
+export function setMapaCriminalFilters(payload) {
+  return { type: SET_MAPACRIMINAL_FILTERS, payload };
+}; 
