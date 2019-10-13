@@ -107,8 +107,12 @@ function filterByDayMonth(crimes, dayMonthInterval) {
   });
 }
 
-function filterByDayWeek(crimes, crimeType) {
-  return crimes;
+function filterByDayWeek(crimes, dayWeekInterval) {
+  return crimes.filter(crime => {
+    const crimeDayWeek = new Date(crime.date).getDay();
+    console.log(crimeDayWeek);
+    return crimeDayWeek >= dayWeekInterval[0] && crimeDayWeek <= dayWeekInterval[1];
+  });
 }
 
 function computeMapaCriminalCrimes(crimes, filters) {

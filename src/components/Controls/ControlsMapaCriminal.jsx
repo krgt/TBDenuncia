@@ -4,6 +4,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CrimeTypeSelectItem from 'components/Crime/CrimeTypeSelectItem.jsx';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
 import { crimeTypes } from "config";
 import { connect } from "react-redux";
 import { setMapaCriminalFilters } from "redux/actions";
@@ -53,15 +59,15 @@ const marksDayMonth = [
 const marksDayWeek = [
   {
     value: 0,
-    label: "Domingo"
+    label: "Segunda"
   },
   {
     value: 3,
-    label: "Quarta-feira"
+    label: "Quinta-feira"
   },
   {
     value: 6,
-    label: "Sábado"
+    label: "Domingo"
   },
 ]
 
@@ -77,11 +83,12 @@ class ControlsMapaCriminal extends React.Component {
       hourInterval: [0, 23],
       dayMonthInterval: [1, 31],
       dayWeekInterval: [0, 6],
+      //daysWeekEnabled: [true, true, true, true, true, true, true]
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSliderChange = this.handleSliderChange.bind(this);
-    this.handleSliderChangeCommitted = this.handleSliderChangeCommitted.bind(this);
+    this.handleCheckboxChange= this.handleCheckboxChange.bind(this);
   }
 
   handleChange(name) { return (event) => {
@@ -92,9 +99,11 @@ class ControlsMapaCriminal extends React.Component {
     this.setState({ [name]: newValue });
   }};
 
-  handleSliderChangeCommitted() {
-//    this.props.setMapaCriminalFilters(this.state);
-  };
+  handleCheckboxChange(index) { return () => {
+    const days = [...this.state.daysWeekEnabled]
+    days[index] = true;
+    this.setState({ daysWeekEnabled: days });
+  }}
 
   componentDidUpdate() {
     this.props.setMapaCriminalFilters(this.state);
@@ -176,6 +185,29 @@ class ControlsMapaCriminal extends React.Component {
           min={0}
           max={6}
         />
+
+        {/*
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Assign responsibility</FormLabel>
+          <FormGroup>
+            {dayName.map( (day, index) => {
+              return (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={this.state.daysWeekEnabled[index]}
+                      onChange={this.handleCheckboxChange(index)}
+                      value={day}
+                    />}
+                  label={day}
+                />
+              )
+            })}
+          </FormGroup>
+          <FormHelperText>Be careful</FormHelperText>
+        </FormControl>
+        */}
       </div>
     );
   }
