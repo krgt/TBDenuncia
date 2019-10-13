@@ -89,12 +89,35 @@ function computeHigh(stats) {
   return high;
 }
 
-function filterByType(crimes, crimeType) { return crimes[crimeType]; }
+function filterByType(crimes, crimeType) {
+  return crimes[crimeType];
+}
+
+function filterByHour(crimes, hourInterval) {
+  return crimes.filter(crime => {
+    const crimeHour = parseInt(crime.time.split(':')[0]);
+    return crimeHour >= hourInterval[0] && crimeHour <= hourInterval[1];
+  });
+}
+
+function filterByDayMonth(crimes, dayMonthInterval) {
+  return crimes.filter(crime => {
+    const crimeDayMonth = parseInt(crime.date.split('-')[2]);
+    return crimeDayMonth >= dayMonthInterval[0] && crimeDayMonth <= dayMonthInterval[1];
+  });
+}
+
+function filterByDayWeek(crimes, crimeType) {
+  return crimes;
+}
 
 function computeMapaCriminalCrimes(crimes, filters) {
   let result;
 
   result = filterByType(crimes, filters.crimeType);
+  result = filterByHour(result, filters.hourInterval);
+  result = filterByDayMonth(result, filters.dayMonthInterval);
+  result = filterByDayWeek(result, filters.dayWeekInterval);
 
   return result;
 }

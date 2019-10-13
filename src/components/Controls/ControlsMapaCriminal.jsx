@@ -86,7 +86,6 @@ class ControlsMapaCriminal extends React.Component {
 
   handleChange(name) { return (event) => {
     this.setState({ [name]: event.target.value });
- //   this.props.setMapaCriminalFilters(this.state);
   }};
 
   handleSliderChange(name) { return (event, newValue) => {
