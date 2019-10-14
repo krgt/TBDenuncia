@@ -10,7 +10,7 @@ import Chartist from "chartist";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
-import { crimeDisplayConfig, chartMonthLabels } from "config.js";
+import { crimeDisplayConfig, chartLabels } from "config.js";
 
 var delays = 80,
   durations = 500;
@@ -63,9 +63,42 @@ const chartConfig = {
   }
 };
 
+function getChart(chartType, chartData, chartConfig) {
+  if (chartType === "month")
+    return (
+      <ChartistGraph
+        className="ct-chart"
+        data={chartData}
+        type="Line"
+        options={chartConfig.options}
+        listener={chartConfig.animation}
+      />
+  )
+  else if (chartType === "week")
+    return (
+      <ChartistGraph
+        className="ct-chart"
+        data={chartData}
+        type="Line"
+        options={chartConfig.options}
+        listener={chartConfig.animation}
+      />
+    )
+  else if (chartType === "day")
+    return (
+      <ChartistGraph
+        className="ct-chart"
+        data={chartData}
+        type="Line"
+        options={chartConfig.options}
+        listener={chartConfig.animation}
+      />
+    )
+}
+
 class CardCrimeStats extends React.Component {
   render() {
-    const { classes, type, data, high } = this.props;
+    const { classes, type, data, high, chartType } = this.props;
     const {icon, cardColor, statsTitle} = crimeDisplayConfig[type];
 
     const imgStyle = {
@@ -76,10 +109,10 @@ class CardCrimeStats extends React.Component {
     };
 
     const chartData = {
-      labels: chartMonthLabels,
-      series: [data.numCrimesByMonth]
+      labels: chartLabels[chartType],
+      series: [data.numCrimesByGrouping]
     };
-    
+
     chartConfig.options.high = high;
 
     return (
@@ -95,13 +128,7 @@ class CardCrimeStats extends React.Component {
             </h3>
           </CardHeader>
             <CardHeader style={{marginBottom: "15px", padding: "25px 0px 0px 0px"}} color={cardColor}>
-              <ChartistGraph
-                className="ct-chart"
-                data={chartData}
-                type="Line"
-                options={chartConfig.options}
-                listener={chartConfig.animation}
-              />
+              {getChart(chartType, chartData, chartConfig)}
             </CardHeader>
         </Card>
       </GridItem>

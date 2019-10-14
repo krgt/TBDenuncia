@@ -54,20 +54,38 @@ const crimeDisplayConfig = {
 
 const crimeTypes = Object.keys(crimeDisplayConfig);
 
-const chartMonthLabels = [
-  "Jan",
-  "Fev",
-  "Mar",
-  "Abr",
-  "Mai",
-  "Jun",
-  "Jul",
-  "Ago",
-  "Set",
-  "Out",
-  "Nov",
-  "Dez"
-];
+const chartLabels = {
+  month: [
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out",
+    "Nov",
+    "Dez"
+  ],
+  week: [
+    "1 a 7",
+    "8 a 14",
+    "15 a 21",
+    "22 a 28",
+    "29 a 31"
+  ],
+  day: [
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui",
+    "Sex",
+    "Sáb",
+    "Dom"
+  ]
+};
 
 export {
   mapBoxAccessToken,
@@ -75,5 +93,5 @@ export {
   getCorreiosCepUrl,
   crimeDisplayConfig,
   crimeTypes,
-  chartMonthLabels,
+  chartLabels,
 };

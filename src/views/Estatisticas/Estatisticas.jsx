@@ -14,7 +14,10 @@ import { crimeTypes } from "config";
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 const mapStateToProps = (state) => {
-  return { crimes: state.estatisticasCrimes };
+  return {
+    crimes: state.estatisticasCrimes,
+    filters: state.estatisticasFilters
+  };
 }
 
 class Estatisticas extends React.Component {
@@ -33,6 +36,7 @@ class Estatisticas extends React.Component {
               type={crimeType}
               data={crimes[crimeType]}
               high={crimes["high"]}
+              chartType={this.props.filters.chartType}
             />
           ))}
         </GridContainer>

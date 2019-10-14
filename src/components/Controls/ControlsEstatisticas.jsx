@@ -4,13 +4,21 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { connect } from "react-redux";
+import { setEstatisticasFilters } from "redux/actions";
+
+const mapStateToProps = (state) => {
+  return {
+    filters: state.estatisticasFilters
+  };
+}
 
 class ControlsEstatisticas extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chartType: "month"
+      chartType: props.filters.chartType
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,6 +26,10 @@ class ControlsEstatisticas extends React.Component {
 
   handleChange(event) {
     this.setState({ chartType: event.target.value });
+  }
+
+  componentDidUpdate() {
+    this.props.setEstatisticasFilters(this.state);
   }
 
   render() {
@@ -42,4 +54,4 @@ class ControlsEstatisticas extends React.Component {
   }
 }
 
-export default ControlsEstatisticas;
+export default connect(mapStateToProps, { setEstatisticasFilters })(ControlsEstatisticas);

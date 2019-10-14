@@ -16,9 +16,9 @@ const initialState = {
     dayWeekInterval: [0, 6]
   },
   estatisticasCrimes: null,
-  estatisticasFilters: {},
+  estatisticasFilters: {chartType: "month"},
   timelineCrimes: [],
-  timelineFilters: {}
+  timelineFilters: {crimeType: "all"}
 };
 
 const store = createStore(rootReducer, initialState, storeEnhancers(applyMiddleware(rootMiddleware, thunk)));

@@ -1,5 +1,29 @@
 import { crimeTypes } from "config";
 
+const estatisticasFiltersConfig = {
+  month: {
+    groupingFunction: crime => {
+      const date = new Date(crime.date);
+      return date.getMonth();
+    },
+    arraySize: 12
+  },
+  week: {
+    groupingFunction: crime => {
+      const day = crime.date.split('-')[2];
+      return parseInt(day/7);
+    },
+    arraySize: 5
+  },
+  day: {
+    groupingFunction: crime => {
+      const date = new Date(crime.date);
+      return date.getDay();
+    },
+    arraySize: 7
+  }
+}
+
 function removeAccents(str) {
   let strAccents = str.split('');
   let strAccentsOut = new Array();
@@ -56,38 +80,6 @@ function getCrimesByType(crimes) {
   return crimesByType;
 }
 
-/*
-  Input: A list of crimes of a given crimeType.
-  Output: An object with the stats displayed at Estatisticas view for a given crimeType.
-*/
-function computeEstatisticasCrimeType(crimes) {
-  const stats = {};
-
-  stats.numCrimes = crimes.length;
-
-  const numCrimesByMonth = new Array(12).fill(0);
-  for (const crime of crimes) {
-    const date = new Date(crime.date);
-    const month = date.getMonth();
-    numCrimesByMonth[month]++;
-  }
-
-  stats.numCrimesByMonth = numCrimesByMonth;
-
-  return stats;
-}
-
-function computeHigh(stats) {
-  let high = 0;
-
-  for (const crimeType of crimeTypes) {
-    high = stats[crimeType].numCrimesByMonth.reduce( (high, value) => {
-      return high > value ? high : value;
-    }, high);
-  }
-
-  return high;
-}
 
 function filterByType(crimes, crimeType) {
   return crimes[crimeType];
@@ -110,7 +102,6 @@ function filterByDayMonth(crimes, dayMonthInterval) {
 function filterByDayWeek(crimes, dayWeekInterval) {
   return crimes.filter(crime => {
     const crimeDayWeek = new Date(crime.date).getDay();
-    console.log(crimeDayWeek);
     return crimeDayWeek >= dayWeekInterval[0] && crimeDayWeek <= dayWeekInterval[1];
   });
 }
@@ -126,15 +117,45 @@ function computeMapaCriminalCrimes(crimes, filters) {
   return result;
 }
 
+function computeEstatisticasCrimeType(crimes, groupingFunction, arraySize) {
+  const stats = {};
+
+  stats.numCrimes = crimes.length;
+
+  const numCrimesByGrouping = new Array(arraySize).fill(0);
+  for (const crime of crimes) {
+    const day = crime.date.split('-')[2];
+    numCrimesByGrouping[groupingFunction(crime)]++;
+  }
+
+  stats.numCrimesByGrouping = numCrimesByGrouping;
+
+  return stats;
+}
+
+function computeHigh(stats) {
+  let high = 0;
+
+  for (const crimeType of crimeTypes) {
+    high = stats[crimeType].numCrimesByGrouping.reduce( (high, value) => {
+      return high > value ? high : value;
+    }, high);
+  }
+
+  return high;
+}
+
 /*
   Input: An object with lists of crimes grouped by crimeType.
   Return: An object with the stats displayed at Estatisticas view for all crimeTypes
 */
 function computeEstatisticasCrimes(crimes, filters) {
   const stats = {};
+  const { groupingFunction, arraySize } = estatisticasFiltersConfig[filters.chartType];
 
   for (const crimeType of crimeTypes) {
-    stats[crimeType] = computeEstatisticasCrimeType(crimes[crimeType]);
+    stats[crimeType] =
+      computeEstatisticasCrimeType(crimes[crimeType], groupingFunction, arraySize);
   }
 
   // highest value found (will be used when drawing chart)
@@ -146,7 +167,9 @@ function computeEstatisticasCrimes(crimes, filters) {
 function computeTimelineCrimes(crimes, filters) {
   let dateA, dateB;
 
-  return crimes.all.sort( (a, b) => {
+  const result = filterByType(crimes, filters.crimeType);
+
+  return result.sort( (a, b) => {
     dateA = new Date(a.date + ' ' + a.time);
     dateB = new Date(b.date + ' ' + b.time);
     if (dateA < dateB)
@@ -156,7 +179,6 @@ function computeTimelineCrimes(crimes, filters) {
     return 0;
   })
 }
-
 
 function computeNewState(state, crimes) {
     const crimesByType = getCrimesByType(crimes);
@@ -178,5 +200,7 @@ export {
   findAddress,
   swapRuaTravessa,
   computeNewState,
-  computeMapaCriminalCrimes
+  computeMapaCriminalCrimes,
+  computeEstatisticasCrimes,
+  computeTimelineCrimes,
 }

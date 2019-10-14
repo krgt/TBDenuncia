@@ -15,7 +15,9 @@ import axios from 'axios';
 export const ADD_CRIME = 'ADD_CRIME';
 export const FETCH_CRIMES = 'FETCH_CRIMES';
 export const NO_ACTION = 'NO_ACTION';
+export const SET_ESTATISTICAS_FILTERS = 'SET_ESTATISTICAS_FILTERS';
 export const SET_MAPACRIMINAL_FILTERS = 'SET_MAPACRIMINAL_FILTERS';
+export const SET_TIMELINE_FILTERS = 'SET_TIMELINE_FILTERS';
 
 
 // This functions receives the data from the Denuncie form and
@@ -97,4 +99,12 @@ export const fetchCrimes = () => async dispatch => {
 
 export function setMapaCriminalFilters(payload) {
   return { type: SET_MAPACRIMINAL_FILTERS, payload };
+}; 
+
+export function setEstatisticasFilters(payload) {
+  return { type: SET_ESTATISTICAS_FILTERS, payload };
+}; 
+
+export function setTimelineFilters(payload) {
+  return { type: SET_TIMELINE_FILTERS, payload };
 }; 

@@ -4,12 +4,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CrimeTypeSelectItem from 'components/Crime/CrimeTypeSelectItem.jsx';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
 import { crimeTypes } from "config";
 import { connect } from "react-redux";
 import { setMapaCriminalFilters } from "redux/actions";
@@ -71,19 +65,20 @@ const marksDayWeek = [
   },
 ]
 
-const dayName = ["Domingo", "Segunda", "Terça",
-  "Quarta", "Quinta", "Sexta", "Sábado"];
+const dayName = ["Segunda", "Terça", "Quarta",
+  "Quinta", "Sexta", "Sábado", "Domingo"];
+
+const mapStateToProps = (state) => {
+  return {
+    filters: state.mapaCriminalFilters
+  };
+}
 
 class ControlsMapaCriminal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      crimeType: "all",
-      hourInterval: [0, 23],
-      dayMonthInterval: [1, 31],
-      dayWeekInterval: [0, 6],
-      //daysWeekEnabled: [true, true, true, true, true, true, true]
+    this.state = { ...props.filters
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -185,32 +180,9 @@ class ControlsMapaCriminal extends React.Component {
           min={0}
           max={6}
         />
-
-        {/*
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Assign responsibility</FormLabel>
-          <FormGroup>
-            {dayName.map( (day, index) => {
-              return (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={this.state.daysWeekEnabled[index]}
-                      onChange={this.handleCheckboxChange(index)}
-                      value={day}
-                    />}
-                  label={day}
-                />
-              )
-            })}
-          </FormGroup>
-          <FormHelperText>Be careful</FormHelperText>
-        </FormControl>
-        */}
       </div>
     );
   }
 }
 
-export default connect(null, { setMapaCriminalFilters })(ControlsMapaCriminal);
+export default connect(mapStateToProps, { setMapaCriminalFilters })(ControlsMapaCriminal);
