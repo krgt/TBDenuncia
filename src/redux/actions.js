@@ -72,7 +72,7 @@ export function addCrime(payload) {
         })
         .catch(errorFunc(payload));
       }
-      // if reponse not empty, search for the correct address from the response from Correios
+      // if response not empty, search for the correct address from the response from Correios
       else {
         const addressCorreios = findAddress(response.data, address.street);
         packAddress(address, addressCorreios);

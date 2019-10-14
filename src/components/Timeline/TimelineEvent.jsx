@@ -18,8 +18,18 @@ function TimelineEvent({ ...props }) {
 
   const {icon, bgColorClass, displayName} = crimeDisplayConfig[data.crimeType];
 
-  let street = data.address.street ? data.address.street : data.lngLat;
-  let cityDivision = data.address.cityDivision ? data.address.cityDivision : '';
+  let street, noAddressMsg;
+
+  if (data.address.street) {
+    street = data.address.street;
+    noAddressMsg = '';
+  }
+  else {
+    street = `Coordenadas: [${data.lngLat}]`;
+    noAddressMsg = 'Local sem endereço.';
+  }
+
+  let cityDivision = data.address.cityDivision ? ` - ${data.address.cityDivision}` : '';
 
   const orientationClass = orientation === 'left'
     ? classes.eventContainerLeft
@@ -38,7 +48,10 @@ function TimelineEvent({ ...props }) {
           {data.time}
         </p>
         <p className={classNames(classes.eventTag2)}>
-          {`${street} - ${cityDivision}`}
+          {noAddressMsg}
+        </p>
+        <p className={classNames(classes.eventTag2)}>
+          {street}{cityDivision}
         </p>
         <div className={classes.eventDesc}>
           {data.crimeDescription ? data.crimeDescription : ""}
