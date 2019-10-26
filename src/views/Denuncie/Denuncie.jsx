@@ -29,6 +29,22 @@ import { mapBoxAccessToken } from 'config';
 
 const crimeNames = ["assalto", "estupro", "furto", "homicidio", "rouboVeiculo"];
 
+const defaultState = {
+      crimeType: 'assalto',
+      crimeDescription: '',
+      date: getCurrentDate(),
+      time: getCurrentTime(),
+      lngLat: null,
+      cpf: {
+        number: '000.000.000-00',
+        error: false,
+        label: "CPF",
+        validInput: false
+      },
+      confirmDialogOpen: false,
+      confirmationSnackbar: false
+}
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -58,21 +74,7 @@ class Denuncie extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      crimeType: 'assalto',
-      crimeDescription: '',
-      date: getCurrentDate(),
-      time: getCurrentTime(),
-      lngLat: null,
-      cpf: {
-        number: '000.000.000-00',
-        error: false,
-        label: "CPF",
-        validInput: false
-      },
-      confirmDialogOpen: false,
-      confirmationSnackbar: false
-    };
+    this.state = defaultState;
 
     this.onChangeLngLat = props.onChange;
 
@@ -92,12 +94,27 @@ class Denuncie extends React.Component {
   }};
 
   handleSubmit(event) {
-    this.setState({ confirmDialogOpen: true });
+    if (this.state.cpf.validInput) {
+      this.setState({ confirmDialogOpen: true });
+    }
+    else {
+      const cpf = this.state.cpf;
+      cpf.error = true;
+      this.setState({ cpf });
+    }
   };
 
   handleCloseConfirmDialog(confirmation) { return (event) => {
     if (confirmation) {
-      this.props.addCrimeProp(this.state);
+      this.props.addCrimeProp({...this.state}); // send a copy because we will reset the state
+      this.setState({
+        cpf: {
+          number: '000.000.000-00',
+          error: false,
+          label: "CPF",
+          validInput: false
+        }
+      });
       this.setState({ confirmationSnackbar: true });
     }
     this.setState({ confirmDialogOpen: false });
