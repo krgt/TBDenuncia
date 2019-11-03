@@ -17,8 +17,10 @@
 */
 // @material-ui/icons
 import LocationOn from "@material-ui/icons/LocationOn";
+import HomeIcon from "@material-ui/icons/Home";
 
 // my views
+import Home from "views/Home/Home.jsx";
 import MapaCriminal from "views/MapaCriminal/MapaCriminal.jsx";
 import Estatisticas from "views/Estatisticas/Estatisticas.jsx";
 import Timeline from "views/Timeline/Timeline.jsx";
@@ -29,6 +31,14 @@ import { TimelineOutline, PlaylistEdit } from 'mdi-material-ui';
 import ShowChart from "@material-ui/icons/ShowChart";
 
 const dashboardRoutes = [
+  {
+    path: "/home",
+    name: "Home",
+    rtlName: "خرائط",
+    icon: HomeIcon,
+    component: Home,
+    layout: "/admin"
+  },
   {
     path: "/mapacriminal",
     name: "Mapa Criminal",

@@ -23,7 +23,7 @@ class App extends React.Component {
         <Switch>
           <Route component={Admin} />
           <Route path="/rtl" component={RTL} />
-          <Redirect from="/" to="/mapacriminal" />
+          <Redirect from="/" to="/home" />
         </Switch>
       </Router>
     );

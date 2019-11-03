@@ -7,7 +7,7 @@
       "**/node_modules/**"
     ],
     "redirects": [{
-      "source": "/@(mapacriminal|estatisticas|timeline|denuncie)",
+      "source": "/@(home|mapacriminal|estatisticas|timeline|denuncie)",
       "destination": "/",
       "type": 301
     }]
