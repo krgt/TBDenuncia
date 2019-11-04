@@ -54,7 +54,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/" to="/mapacriminal" />
+    <Redirect from="/" to="/home" />
   </Switch>
 );
 

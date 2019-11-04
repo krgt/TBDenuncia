@@ -36,17 +36,17 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 import { Windows } from "mdi-material-ui";
 
 function settingsButton(onClick) {
-  if (window.location.pathname === '/denuncie')
+  if (['/denuncie', '/home'].includes(window.location.pathname))
     return;
-    return (
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        onClick={onClick}
-      >
-        <SettingsIcon/>
-      </IconButton>
-    );
+  return (
+    <IconButton
+      color="inherit"
+      aria-label="open drawer"
+      onClick={onClick}
+    >
+      <SettingsIcon/>
+    </IconButton>
+  );
 }
 
 function Header({ ...props }) {

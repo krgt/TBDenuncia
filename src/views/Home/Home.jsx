@@ -32,7 +32,7 @@ function Home(props) {
   const {classes} = props;
   return (
     <div>
-      <GridContainer>
+      <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardBody profile>
@@ -41,6 +41,7 @@ function Home(props) {
               <p className={classes.description}>
                 Utilize o menu para visualizar informações sobre denúncias.
               </p>
+              <hr/>
               <p className={classes.description}>
                 Foi vítima de algum crime?
               </p>
